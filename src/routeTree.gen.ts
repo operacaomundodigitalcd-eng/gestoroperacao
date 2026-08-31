@@ -24,6 +24,7 @@ import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenti
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
 import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authenticated/planos-de-acao'
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedResultadosRouteImport } from './routes/_authenticated/resultados'
 
 const IndexRoute = IndexRouteImport.update({
@@ -106,6 +107,11 @@ const AuthenticatedRankingsRoute = AuthenticatedRankingsRouteImport.update({
   path: '/rankings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
   id: '/resultados',
   path: '/resultados',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/metas': typeof AuthenticatedMetasRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
 }
 export interface FileRoutesByTo {
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/metas': typeof AuthenticatedMetasRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
 }
 export interface FileRoutesById {
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
   '/_authenticated/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/resultados': typeof AuthenticatedResultadosRoute
 }
 export interface FileRouteTypes {
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/metas'
     | '/planos-de-acao'
     | '/rankings'
+    | '/relatorios'
     | '/resultados'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/metas'
     | '/planos-de-acao'
     | '/rankings'
+    | '/relatorios'
     | '/resultados'
   id:
     | '__root__'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/_authenticated/metas'
     | '/_authenticated/planos-de-acao'
     | '/_authenticated/rankings'
+    | '/_authenticated/relatorios'
     | '/_authenticated/resultados'
   fileRoutesById: FileRoutesById
 }
@@ -333,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRankingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/resultados': {
       id: '/_authenticated/resultados'
       path: '/resultados'
@@ -356,6 +375,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
   AuthenticatedPlanosDeAcaoRoute: typeof AuthenticatedPlanosDeAcaoRoute
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedResultadosRoute: typeof AuthenticatedResultadosRoute
 }
 
@@ -372,6 +392,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
   AuthenticatedPlanosDeAcaoRoute: AuthenticatedPlanosDeAcaoRoute,
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedResultadosRoute: AuthenticatedResultadosRoute,
 }
 
