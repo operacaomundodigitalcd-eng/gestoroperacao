@@ -51,7 +51,7 @@ function Colaboradores() {
 
   const { data: pessoas = [], isLoading } = useTabela<Colaborador>(
     "employees",
-    "id, nome, cpf, email, telefone, matricula, status, data_admissao, unidade, teams(nome), departments(nome), positions(nome), job_functions(nome)",
+    "id, nome, cpf, email, telefone, matricula, status, data_admissao, unidade, teams!employees_team_id_fkey(nome), departments!employees_department_id_fkey(nome), positions(nome), job_functions(nome)",
     "nome",
   );
   const { data: equipes = [] } = useTabela<Opcao>("teams", "id, nome", "nome");
