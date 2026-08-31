@@ -18,6 +18,7 @@ import { Route as AuthenticatedComparativosRouteImport } from './routes/_authent
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDepartamentosRouteImport } from './routes/_authenticated/departamentos'
 import { Route as AuthenticatedEquipesRouteImport } from './routes/_authenticated/equipes'
+import { Route as AuthenticatedFechamentoRouteImport } from './routes/_authenticated/fechamento'
 import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenticated/indicadores'
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
 import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authenticated/planos-de-acao'
@@ -71,6 +72,11 @@ const AuthenticatedEquipesRoute = AuthenticatedEquipesRouteImport.update({
   path: '/equipes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedFechamentoRoute = AuthenticatedFechamentoRouteImport.update({
+  id: '/fechamento',
+  path: '/fechamento',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedIndicadoresRoute =
   AuthenticatedIndicadoresRouteImport.update({
     id: '/indicadores',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departamentos': typeof AuthenticatedDepartamentosRoute
   '/equipes': typeof AuthenticatedEquipesRoute
+  '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departamentos': typeof AuthenticatedDepartamentosRoute
   '/equipes': typeof AuthenticatedEquipesRoute
+  '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/departamentos': typeof AuthenticatedDepartamentosRoute
   '/_authenticated/equipes': typeof AuthenticatedEquipesRoute
+  '/_authenticated/fechamento': typeof AuthenticatedFechamentoRoute
   '/_authenticated/indicadores': typeof AuthenticatedIndicadoresRoute
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
   '/_authenticated/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/departamentos'
     | '/equipes'
+    | '/fechamento'
     | '/indicadores'
     | '/metas'
     | '/planos-de-acao'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/departamentos'
     | '/equipes'
+    | '/fechamento'
     | '/indicadores'
     | '/metas'
     | '/planos-de-acao'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/departamentos'
     | '/_authenticated/equipes'
+    | '/_authenticated/fechamento'
     | '/_authenticated/indicadores'
     | '/_authenticated/metas'
     | '/_authenticated/planos-de-acao'
@@ -266,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEquipesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/fechamento': {
+      id: '/_authenticated/fechamento'
+      path: '/fechamento'
+      fullPath: '/fechamento'
+      preLoaderRoute: typeof AuthenticatedFechamentoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/indicadores': {
       id: '/_authenticated/indicadores'
       path: '/indicadores'
@@ -311,6 +330,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDepartamentosRoute: typeof AuthenticatedDepartamentosRoute
   AuthenticatedEquipesRoute: typeof AuthenticatedEquipesRoute
+  AuthenticatedFechamentoRoute: typeof AuthenticatedFechamentoRoute
   AuthenticatedIndicadoresRoute: typeof AuthenticatedIndicadoresRoute
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
   AuthenticatedPlanosDeAcaoRoute: typeof AuthenticatedPlanosDeAcaoRoute
@@ -325,6 +345,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDepartamentosRoute: AuthenticatedDepartamentosRoute,
   AuthenticatedEquipesRoute: AuthenticatedEquipesRoute,
+  AuthenticatedFechamentoRoute: AuthenticatedFechamentoRoute,
   AuthenticatedIndicadoresRoute: AuthenticatedIndicadoresRoute,
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
   AuthenticatedPlanosDeAcaoRoute: AuthenticatedPlanosDeAcaoRoute,
