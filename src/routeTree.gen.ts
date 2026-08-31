@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedComparativosRouteImport } from './routes/_authenticated/comparativos'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenticated/indicadores'
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
@@ -31,6 +32,12 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedComparativosRoute =
+  AuthenticatedComparativosRouteImport.update({
+    id: '/comparativos',
+    path: '/comparativos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -56,6 +63,7 @@ const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
@@ -64,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
@@ -74,6 +83,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/comparativos': typeof AuthenticatedComparativosRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/indicadores': typeof AuthenticatedIndicadoresRoute
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
@@ -82,14 +92,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/dashboard' | '/indicadores' | '/metas' | '/resultados'
+    | '/'
+    | '/auth'
+    | '/comparativos'
+    | '/dashboard'
+    | '/indicadores'
+    | '/metas'
+    | '/resultados'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/indicadores' | '/metas' | '/resultados'
+  to:
+    | '/'
+    | '/auth'
+    | '/comparativos'
+    | '/dashboard'
+    | '/indicadores'
+    | '/metas'
+    | '/resultados'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/comparativos'
     | '/_authenticated/dashboard'
     | '/_authenticated/indicadores'
     | '/_authenticated/metas'
@@ -125,6 +149,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/comparativos': {
+      id: '/_authenticated/comparativos'
+      path: '/comparativos'
+      fullPath: '/comparativos'
+      preLoaderRoute: typeof AuthenticatedComparativosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -157,6 +188,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedComparativosRoute: typeof AuthenticatedComparativosRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedIndicadoresRoute: typeof AuthenticatedIndicadoresRoute
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
@@ -164,6 +196,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedComparativosRoute: AuthenticatedComparativosRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedIndicadoresRoute: AuthenticatedIndicadoresRoute,
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
