@@ -83,18 +83,28 @@ function AuthPage() {
       options: { emailRedirectTo: `${window.location.origin}/dashboard`, data: { nome } },
     });
     setCarregando(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Conta criada. Verifique seu e-mail se a confirmação estiver ativa.");
     void navigate({ to: "/dashboard" });
   };
 
   const recuperar = async () => {
-    if (!email.trim()) return toast.error("Informe o e-mail para recuperar a senha.");
+    if (!email.trim()) {
+      toast.error("Informe o e-mail para recuperar a senha.");
+      return;
+    }
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
       redirectTo: `${window.location.origin}/redefinir-senha`,
     });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Enviamos um link de redefinição para o seu e-mail.");
+
   };
 
   return (
