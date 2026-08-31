@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAnalisesRouteImport } from './routes/_authenticated/analises'
 import { Route as AuthenticatedColaboradoresRouteImport } from './routes/_authenticated/colaboradores'
 import { Route as AuthenticatedComparativosRouteImport } from './routes/_authenticated/comparativos'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -35,6 +36,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAnalisesRoute = AuthenticatedAnalisesRouteImport.update({
+  id: '/analises',
+  path: '/analises',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedColaboradoresRoute =
   AuthenticatedColaboradoresRouteImport.update({
@@ -89,6 +95,7 @@ const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analises': typeof AuthenticatedAnalisesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analises': typeof AuthenticatedAnalisesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/analises': typeof AuthenticatedAnalisesRoute
   '/_authenticated/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/_authenticated/comparativos': typeof AuthenticatedComparativosRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/analises'
     | '/colaboradores'
     | '/comparativos'
     | '/dashboard'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/analises'
     | '/colaboradores'
     | '/comparativos'
     | '/dashboard'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/analises'
     | '/_authenticated/colaboradores'
     | '/_authenticated/comparativos'
     | '/_authenticated/dashboard'
@@ -198,6 +210,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/analises': {
+      id: '/_authenticated/analises'
+      path: '/analises'
+      fullPath: '/analises'
+      preLoaderRoute: typeof AuthenticatedAnalisesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/colaboradores': {
       id: '/_authenticated/colaboradores'
@@ -266,6 +285,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAnalisesRoute: typeof AuthenticatedAnalisesRoute
   AuthenticatedColaboradoresRoute: typeof AuthenticatedColaboradoresRoute
   AuthenticatedComparativosRoute: typeof AuthenticatedComparativosRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -278,6 +298,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAnalisesRoute: AuthenticatedAnalisesRoute,
   AuthenticatedColaboradoresRoute: AuthenticatedColaboradoresRoute,
   AuthenticatedComparativosRoute: AuthenticatedComparativosRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
