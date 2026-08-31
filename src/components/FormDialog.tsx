@@ -17,6 +17,17 @@ export type Campo = {
   colSpan?: 1 | 2;
 };
 
+export type Valores = {
+  /** Texto opcional (null quando vazio). */
+  txt: (campo: string) => string | null;
+  /** Texto obrigatorio. */
+  req: (campo: string) => string;
+  /** Numero opcional (null quando vazio). */
+  nmr: (campo: string) => number | null;
+  /** Numero com valor padrao. */
+  num: (campo: string, padrao: number) => number;
+};
+
 export function FormDialog({
   titulo,
   descricao,
@@ -30,7 +41,7 @@ export function FormDialog({
   campos: Campo[];
   gatilho: ReactNode;
   valoresIniciais?: Record<string, string>;
-  onSubmit: (valores: Record<string, string>) => Promise<void>;
+  onSubmit: (valores: Valores) => Promise<void>;
 }) {
   const [aberto, setAberto] = useState(false);
   const [valores, setValores] = useState<Record<string, string>>(valoresIniciais ?? {});
@@ -68,7 +79,12 @@ export function FormDialog({
             setSalvando(true);
             setErro(null);
             try {
-              await onSubmit(valores);
+              await onSubmit({
+                txt: (c) => (valores[c] ?? "").trim() || null,
+                req: (c) => (valores[c] ?? "").trim(),
+                nmr: (c) => (valores[c] ? Number(valores[c]) : null),
+                num: (c, padrao) => (valores[c] ? Number(valores[c]) : padrao),
+              });
               setAberto(false);
             } catch (err) {
               setErro(err instanceof Error ? err.message : "Não foi possível salvar.");

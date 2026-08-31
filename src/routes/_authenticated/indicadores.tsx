@@ -95,22 +95,23 @@ function Indicadores() {
         { name: "descricao", label: "Descrição / fórmula de cálculo", tipo: "textarea" },
       ]}
       onSubmit={async (v) => {
+        const nome = v.req("nome");
         const { error } = await supabase.from("indicators").insert({
-          nome: v.nome!,
-          codigo: v.codigo || null,
-          category_id: v.category_id || null,
-          unit_id: v.unit_id || null,
-          direcao: (v.direcao || "maior_melhor") as never,
-          meta_padrao: v.meta_padrao ? Number(v.meta_padrao) : null,
-          peso: v.peso ? Number(v.peso) : 1,
-          periodicidade: (v.periodicidade || "mensal") as never,
-          department_id: v.department_id || null,
-          team_id: v.team_id || null,
-          responsavel_id: v.responsavel_id || null,
-          descricao: v.descricao || null,
+          nome,
+          codigo: v.txt("codigo"),
+          category_id: v.txt("category_id"),
+          unit_id: v.txt("unit_id"),
+          direcao: (v.txt("direcao") ?? "maior_melhor") as never,
+          meta_padrao: v.nmr("meta_padrao"),
+          peso: v.num("peso", 1),
+          periodicidade: (v.txt("periodicidade") ?? "mensal") as never,
+          department_id: v.txt("department_id"),
+          team_id: v.txt("team_id"),
+          responsavel_id: v.txt("responsavel_id"),
+          descricao: v.txt("descricao"),
         });
         if (error) throw error;
-        await registrarAuditoria({ operacao: "criar", tabela: "indicators", descricao: `Indicador criado: ${v.nome}` });
+        await registrarAuditoria({ operacao: "criar", tabela: "indicators", descricao: `Indicador criado: ${nome}` });
         await qc.invalidateQueries({ queryKey: ["indicadores"] });
         toast.success("Indicador cadastrado.");
       }}
