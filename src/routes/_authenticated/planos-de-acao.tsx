@@ -62,7 +62,11 @@ function Planos() {
       .from("action_plans")
       .update({ status: status as never, data_conclusao: status === "concluida" ? new Date().toISOString().slice(0, 10) : null })
       .eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
     await registrarAuditoria({ operacao: "atualizar", tabela: "action_plans", registro_id: id, descricao: `Status alterado para ${status}` });
     await qc.invalidateQueries({ queryKey: ["tabela", "action_plans"] });
     toast.success("Status atualizado.");

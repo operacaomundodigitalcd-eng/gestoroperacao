@@ -20,6 +20,7 @@ import { Route as AuthenticatedDepartamentosRouteImport } from './routes/_authen
 import { Route as AuthenticatedEquipesRouteImport } from './routes/_authenticated/equipes'
 import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenticated/indicadores'
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
+import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authenticated/planos-de-acao'
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
 import { Route as AuthenticatedResultadosRouteImport } from './routes/_authenticated/resultados'
 
@@ -81,6 +82,12 @@ const AuthenticatedMetasRoute = AuthenticatedMetasRouteImport.update({
   path: '/metas',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlanosDeAcaoRoute =
+  AuthenticatedPlanosDeAcaoRouteImport.update({
+    id: '/planos-de-acao',
+    path: '/planos-de-acao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRankingsRoute = AuthenticatedRankingsRouteImport.update({
   id: '/rankings',
   path: '/rankings',
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/equipes': typeof AuthenticatedEquipesRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/resultados': typeof AuthenticatedResultadosRoute
 }
@@ -117,6 +125,7 @@ export interface FileRoutesByTo {
   '/equipes': typeof AuthenticatedEquipesRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/resultados': typeof AuthenticatedResultadosRoute
 }
@@ -133,6 +142,7 @@ export interface FileRoutesById {
   '/_authenticated/equipes': typeof AuthenticatedEquipesRoute
   '/_authenticated/indicadores': typeof AuthenticatedIndicadoresRoute
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
+  '/_authenticated/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
   '/_authenticated/resultados': typeof AuthenticatedResultadosRoute
 }
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/equipes'
     | '/indicadores'
     | '/metas'
+    | '/planos-de-acao'
     | '/rankings'
     | '/resultados'
   fileRoutesByTo: FileRoutesByTo
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/equipes'
     | '/indicadores'
     | '/metas'
+    | '/planos-de-acao'
     | '/rankings'
     | '/resultados'
   id:
@@ -178,6 +190,7 @@ export interface FileRouteTypes {
     | '/_authenticated/equipes'
     | '/_authenticated/indicadores'
     | '/_authenticated/metas'
+    | '/_authenticated/planos-de-acao'
     | '/_authenticated/rankings'
     | '/_authenticated/resultados'
   fileRoutesById: FileRoutesById
@@ -267,6 +280,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMetasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/planos-de-acao': {
+      id: '/_authenticated/planos-de-acao'
+      path: '/planos-de-acao'
+      fullPath: '/planos-de-acao'
+      preLoaderRoute: typeof AuthenticatedPlanosDeAcaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/rankings': {
       id: '/_authenticated/rankings'
       path: '/rankings'
@@ -293,6 +313,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedEquipesRoute: typeof AuthenticatedEquipesRoute
   AuthenticatedIndicadoresRoute: typeof AuthenticatedIndicadoresRoute
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
+  AuthenticatedPlanosDeAcaoRoute: typeof AuthenticatedPlanosDeAcaoRoute
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
   AuthenticatedResultadosRoute: typeof AuthenticatedResultadosRoute
 }
@@ -306,6 +327,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEquipesRoute: AuthenticatedEquipesRoute,
   AuthenticatedIndicadoresRoute: AuthenticatedIndicadoresRoute,
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
+  AuthenticatedPlanosDeAcaoRoute: AuthenticatedPlanosDeAcaoRoute,
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
   AuthenticatedResultadosRoute: AuthenticatedResultadosRoute,
 }
