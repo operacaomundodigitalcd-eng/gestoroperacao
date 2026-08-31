@@ -35,6 +35,7 @@ export interface ResultadoRow {
   observacao: string | null;
   justificativa: string | null;
   indicator_id: string;
+  goal_id: string | null;
   team_id: string | null;
   department_id: string | null;
   indicators: { nome: string; codigo: string | null; direcao: Direcao; peso: number } | null;
