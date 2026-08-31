@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAdministracaoRouteImport } from './routes/_authenticated/administracao'
 import { Route as AuthenticatedAnalisesRouteImport } from './routes/_authenticated/analises'
 import { Route as AuthenticatedApresentacoesRouteImport } from './routes/_authenticated/apresentacoes'
 import { Route as AuthenticatedColaboradoresRouteImport } from './routes/_authenticated/colaboradores'
@@ -41,6 +42,12 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdministracaoRoute =
+  AuthenticatedAdministracaoRouteImport.update({
+    id: '/administracao',
+    path: '/administracao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAnalisesRoute = AuthenticatedAnalisesRouteImport.update({
   id: '/analises',
   path: '/analises',
@@ -121,6 +128,7 @@ const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/administracao': typeof AuthenticatedAdministracaoRoute
   '/analises': typeof AuthenticatedAnalisesRoute
   '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
@@ -139,6 +147,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/administracao': typeof AuthenticatedAdministracaoRoute
   '/analises': typeof AuthenticatedAnalisesRoute
   '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
@@ -159,6 +168,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/administracao': typeof AuthenticatedAdministracaoRoute
   '/_authenticated/analises': typeof AuthenticatedAnalisesRoute
   '/_authenticated/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/_authenticated/colaboradores': typeof AuthenticatedColaboradoresRoute
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/administracao'
     | '/analises'
     | '/apresentacoes'
     | '/colaboradores'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/administracao'
     | '/analises'
     | '/apresentacoes'
     | '/colaboradores'
@@ -216,6 +228,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/administracao'
     | '/_authenticated/analises'
     | '/_authenticated/apresentacoes'
     | '/_authenticated/colaboradores'
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/administracao': {
+      id: '/_authenticated/administracao'
+      path: '/administracao'
+      fullPath: '/administracao'
+      preLoaderRoute: typeof AuthenticatedAdministracaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/analises': {
       id: '/_authenticated/analises'
@@ -363,6 +383,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdministracaoRoute: typeof AuthenticatedAdministracaoRoute
   AuthenticatedAnalisesRoute: typeof AuthenticatedAnalisesRoute
   AuthenticatedApresentacoesRoute: typeof AuthenticatedApresentacoesRoute
   AuthenticatedColaboradoresRoute: typeof AuthenticatedColaboradoresRoute
@@ -380,6 +401,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdministracaoRoute: AuthenticatedAdministracaoRoute,
   AuthenticatedAnalisesRoute: AuthenticatedAnalisesRoute,
   AuthenticatedApresentacoesRoute: AuthenticatedApresentacoesRoute,
   AuthenticatedColaboradoresRoute: AuthenticatedColaboradoresRoute,
