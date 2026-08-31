@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAnalisesRouteImport } from './routes/_authenticated/analises'
+import { Route as AuthenticatedApresentacoesRouteImport } from './routes/_authenticated/apresentacoes'
 import { Route as AuthenticatedColaboradoresRouteImport } from './routes/_authenticated/colaboradores'
 import { Route as AuthenticatedComparativosRouteImport } from './routes/_authenticated/comparativos'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -44,6 +45,12 @@ const AuthenticatedAnalisesRoute = AuthenticatedAnalisesRouteImport.update({
   path: '/analises',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedApresentacoesRoute =
+  AuthenticatedApresentacoesRouteImport.update({
+    id: '/apresentacoes',
+    path: '/apresentacoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedColaboradoresRoute =
   AuthenticatedColaboradoresRouteImport.update({
     id: '/colaboradores',
@@ -109,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/analises': typeof AuthenticatedAnalisesRoute
+  '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/analises': typeof AuthenticatedAnalisesRoute
+  '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -143,6 +152,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/analises': typeof AuthenticatedAnalisesRoute
+  '/_authenticated/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/_authenticated/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/_authenticated/comparativos': typeof AuthenticatedComparativosRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/analises'
+    | '/apresentacoes'
     | '/colaboradores'
     | '/comparativos'
     | '/dashboard'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/analises'
+    | '/apresentacoes'
     | '/colaboradores'
     | '/comparativos'
     | '/dashboard'
@@ -194,6 +206,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/analises'
+    | '/_authenticated/apresentacoes'
     | '/_authenticated/colaboradores'
     | '/_authenticated/comparativos'
     | '/_authenticated/dashboard'
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/analises'
       fullPath: '/analises'
       preLoaderRoute: typeof AuthenticatedAnalisesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/apresentacoes': {
+      id: '/_authenticated/apresentacoes'
+      path: '/apresentacoes'
+      fullPath: '/apresentacoes'
+      preLoaderRoute: typeof AuthenticatedApresentacoesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/colaboradores': {
@@ -325,6 +345,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAnalisesRoute: typeof AuthenticatedAnalisesRoute
+  AuthenticatedApresentacoesRoute: typeof AuthenticatedApresentacoesRoute
   AuthenticatedColaboradoresRoute: typeof AuthenticatedColaboradoresRoute
   AuthenticatedComparativosRoute: typeof AuthenticatedComparativosRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -340,6 +361,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAnalisesRoute: AuthenticatedAnalisesRoute,
+  AuthenticatedApresentacoesRoute: AuthenticatedApresentacoesRoute,
   AuthenticatedColaboradoresRoute: AuthenticatedColaboradoresRoute,
   AuthenticatedComparativosRoute: AuthenticatedComparativosRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
