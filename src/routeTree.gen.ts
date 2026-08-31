@@ -27,6 +27,7 @@ import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authent
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedResultadosRouteImport } from './routes/_authenticated/resultados'
+import { Route as AuthenticatedEquipeIdRouteImport } from './routes/_authenticated/equipe.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +125,11 @@ const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
   path: '/resultados',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEquipeIdRoute = AuthenticatedEquipeIdRouteImport.update({
+  id: '/equipe/$id',
+  path: '/equipe/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/resultados': typeof AuthenticatedResultadosRoute
+  '/_authenticated/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/equipe/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -223,6 +233,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/equipe/$id'
   id:
     | '__root__'
     | '/'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/_authenticated/rankings'
     | '/_authenticated/relatorios'
     | '/_authenticated/resultados'
+    | '/_authenticated/equipe/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -379,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedResultadosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/equipe/$id': {
+      id: '/_authenticated/equipe/$id'
+      path: '/equipe/$id'
+      fullPath: '/equipe/$id'
+      preLoaderRoute: typeof AuthenticatedEquipeIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -398,6 +417,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedResultadosRoute: typeof AuthenticatedResultadosRoute
+  AuthenticatedEquipeIdRoute: typeof AuthenticatedEquipeIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -416,6 +436,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedResultadosRoute: AuthenticatedResultadosRoute,
+  AuthenticatedEquipeIdRoute: AuthenticatedEquipeIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
