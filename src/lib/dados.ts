@@ -70,7 +70,7 @@ export function useResultados(ano?: number) {
         .from("results")
         .select(
           sel(
-            "id, ano, mes, valor_realizado, valor_meta, percentual, status_performance, observacao, justificativa, indicator_id, team_id, department_id, indicators(nome, codigo, direcao, peso), teams(nome), employees(nome)",
+            "id, ano, mes, valor_realizado, valor_meta, percentual, status_performance, observacao, justificativa, indicator_id, goal_id, team_id, department_id, indicators(nome, codigo, direcao, peso), teams(nome), employees(nome)",
           ),
         );
       if (ano) q = q.eq("ano", ano);
