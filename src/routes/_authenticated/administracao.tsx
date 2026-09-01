@@ -1,9 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { AppShell, Painel } from "@/components/AppShell";
 import { Pill } from "@/components/StatusBadge";
 import { useAuth } from "@/hooks/useAuth";
 import { useTabela } from "@/lib/dados";
+import { listarPapeis, type PapelUsuario } from "@/lib/admin.functions";
 import { ROLE_LABEL } from "@/lib/perf";
+
 
 export const Route = createFileRoute("/_authenticated/administracao")({
   head: () => ({
