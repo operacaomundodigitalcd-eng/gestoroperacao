@@ -61,7 +61,7 @@ function PainelEquipe() {
 
   const { data: equipes = [] } = useTabela<EquipeRow>(
     "teams",
-    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_id_fkey(nome), supervisor:employees!teams_supervisor_id_fkey(nome)",
+    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",
     "nome",
   );
   const { data: indicadores = [] } = useIndicadores();

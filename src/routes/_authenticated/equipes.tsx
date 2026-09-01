@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { AppShell, Painel } from "@/components/AppShell";
@@ -47,7 +47,7 @@ function Equipes() {
   const { podeGerenciar } = useAuth();
   const { data: equipes = [], isLoading } = useTabela<EquipeRow>(
     "teams",
-    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_id_fkey(nome), supervisor:employees!teams_supervisor_id_fkey(nome)",
+    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",
     "nome",
   );
   const { data: subgrupos = [] } = useTabela<SubgrupoRow>("subgroups", "id, nome, descricao, status, teams(nome)", "nome");
@@ -121,7 +121,12 @@ function Equipes() {
         <div className="grid gap-3 md:grid-cols-2">
           {isLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
           {equipes.map((e) => (
-            <div key={e.id} className="border-l-2 border-primary bg-sand/40 p-4">
+            <Link
+              key={e.id}
+              to="/equipe/$id"
+              params={{ id: e.id }}
+              className="block border-l-2 border-primary bg-sand/40 p-4 transition-colors hover:bg-sand"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-display text-base font-bold tracking-tight">{e.nome}</p>
@@ -131,9 +136,9 @@ function Equipes() {
               </div>
               {e.descricao && <p className="mt-2 text-sm text-muted-foreground">{e.descricao}</p>}
               <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"}
+                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"} · ver painel →
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </Painel>
