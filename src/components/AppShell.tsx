@@ -18,6 +18,7 @@ export const MENU: Grupo[] = [
     codigo: "02",
     itens: [
       { to: "/indicadores", label: "Indicadores" },
+      { to: "/corporativo", label: "Corporativo" },
       { to: "/metas", label: "Metas" },
       { to: "/resultados", label: "Resultados" },
       { to: "/comparativos", label: "Comparativos" },

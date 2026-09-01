@@ -17,6 +17,7 @@ import { Route as AuthenticatedAnalisesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedApresentacoesRouteImport } from './routes/_authenticated/apresentacoes'
 import { Route as AuthenticatedColaboradoresRouteImport } from './routes/_authenticated/colaboradores'
 import { Route as AuthenticatedComparativosRouteImport } from './routes/_authenticated/comparativos'
+import { Route as AuthenticatedCorporativoRouteImport } from './routes/_authenticated/corporativo'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDepartamentosRouteImport } from './routes/_authenticated/departamentos'
 import { Route as AuthenticatedEquipesRouteImport } from './routes/_authenticated/equipes'
@@ -70,6 +71,12 @@ const AuthenticatedComparativosRoute =
   AuthenticatedComparativosRouteImport.update({
     id: '/comparativos',
     path: '/comparativos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCorporativoRoute =
+  AuthenticatedCorporativoRouteImport.update({
+    id: '/corporativo',
+    path: '/corporativo',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -139,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
+  '/corporativo': typeof AuthenticatedCorporativoRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departamentos': typeof AuthenticatedDepartamentosRoute
   '/equipes': typeof AuthenticatedEquipesRoute
@@ -159,6 +167,7 @@ export interface FileRoutesByTo {
   '/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/comparativos': typeof AuthenticatedComparativosRoute
+  '/corporativo': typeof AuthenticatedCorporativoRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departamentos': typeof AuthenticatedDepartamentosRoute
   '/equipes': typeof AuthenticatedEquipesRoute
@@ -181,6 +190,7 @@ export interface FileRoutesById {
   '/_authenticated/apresentacoes': typeof AuthenticatedApresentacoesRoute
   '/_authenticated/colaboradores': typeof AuthenticatedColaboradoresRoute
   '/_authenticated/comparativos': typeof AuthenticatedComparativosRoute
+  '/_authenticated/corporativo': typeof AuthenticatedCorporativoRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/departamentos': typeof AuthenticatedDepartamentosRoute
   '/_authenticated/equipes': typeof AuthenticatedEquipesRoute
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/apresentacoes'
     | '/colaboradores'
     | '/comparativos'
+    | '/corporativo'
     | '/dashboard'
     | '/departamentos'
     | '/equipes'
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/apresentacoes'
     | '/colaboradores'
     | '/comparativos'
+    | '/corporativo'
     | '/dashboard'
     | '/departamentos'
     | '/equipes'
@@ -244,6 +256,7 @@ export interface FileRouteTypes {
     | '/_authenticated/apresentacoes'
     | '/_authenticated/colaboradores'
     | '/_authenticated/comparativos'
+    | '/_authenticated/corporativo'
     | '/_authenticated/dashboard'
     | '/_authenticated/departamentos'
     | '/_authenticated/equipes'
@@ -319,6 +332,13 @@ declare module '@tanstack/react-router' {
       path: '/comparativos'
       fullPath: '/comparativos'
       preLoaderRoute: typeof AuthenticatedComparativosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/corporativo': {
+      id: '/_authenticated/corporativo'
+      path: '/corporativo'
+      fullPath: '/corporativo'
+      preLoaderRoute: typeof AuthenticatedCorporativoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -407,6 +427,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApresentacoesRoute: typeof AuthenticatedApresentacoesRoute
   AuthenticatedColaboradoresRoute: typeof AuthenticatedColaboradoresRoute
   AuthenticatedComparativosRoute: typeof AuthenticatedComparativosRoute
+  AuthenticatedCorporativoRoute: typeof AuthenticatedCorporativoRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDepartamentosRoute: typeof AuthenticatedDepartamentosRoute
   AuthenticatedEquipesRoute: typeof AuthenticatedEquipesRoute
@@ -426,6 +447,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApresentacoesRoute: AuthenticatedApresentacoesRoute,
   AuthenticatedColaboradoresRoute: AuthenticatedColaboradoresRoute,
   AuthenticatedComparativosRoute: AuthenticatedComparativosRoute,
+  AuthenticatedCorporativoRoute: AuthenticatedCorporativoRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDepartamentosRoute: AuthenticatedDepartamentosRoute,
   AuthenticatedEquipesRoute: AuthenticatedEquipesRoute,
