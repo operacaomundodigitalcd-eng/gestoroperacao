@@ -47,7 +47,7 @@ function Equipes() {
   const { podeGerenciar } = useAuth();
   const { data: equipes = [], isLoading } = useTabela<EquipeRow>(
     "teams",
-    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_id_fkey(nome), supervisor:employees!teams_supervisor_id_fkey(nome)",
+    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",
     "nome",
   );
   const { data: subgrupos = [] } = useTabela<SubgrupoRow>("subgroups", "id, nome, descricao, status, teams(nome)", "nome");
