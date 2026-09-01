@@ -29,11 +29,6 @@ interface Perfil {
   email: string;
   created_at: string;
 }
-interface Papel {
-  id: string;
-  user_id: string;
-  role: string;
-}
 interface Log {
   id: string;
   operacao: string;
@@ -45,11 +40,17 @@ interface Log {
 
 function Administracao() {
   const { ehAdmin } = useAuth();
+  const buscarPapeis = useServerFn(listarPapeis);
   const { data: perfis = [] } = useTabela<Perfil>("profiles", "id, nome, email, created_at", "nome");
-  const { data: papeis = [] } = useTabela<Papel>("user_roles", "id, user_id, role");
+  const { data: papeis = [] } = useQuery<PapelUsuario[]>({
+    queryKey: ["papeis-admin"],
+    queryFn: () => buscarPapeis(),
+    enabled: ehAdmin,
+  });
   const { data: logs = [] } = useTabela<Log>("audit_logs", "id, operacao, tabela, descricao, user_email, created_at", "created_at");
 
   const papeisDe = (id: string) => papeis.filter((p) => p.user_id === id).map((p) => ROLE_LABEL[p.role] ?? p.role);
+
 
   return (
     <AppShell titulo="Usuários e Auditoria" breadcrumb="07 · Administração">
