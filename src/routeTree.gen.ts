@@ -29,6 +29,7 @@ import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authent
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedResultadosRouteImport } from './routes/_authenticated/resultados'
+import { Route as AuthenticatedUsuariosRouteImport } from './routes/_authenticated/usuarios'
 import { Route as AuthenticatedEquipeIdRouteImport } from './routes/_authenticated/equipe.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -139,6 +140,11 @@ const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
   path: '/resultados',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedUsuariosRoute = AuthenticatedUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedEquipeIdRoute = AuthenticatedEquipeIdRouteImport.update({
   id: '/equipe/$id',
   path: '/equipe/$id',
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/usuarios': typeof AuthenticatedUsuariosRoute
   '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesByTo {
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/usuarios': typeof AuthenticatedUsuariosRoute
   '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesById {
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/resultados': typeof AuthenticatedResultadosRoute
+  '/_authenticated/usuarios': typeof AuthenticatedUsuariosRoute
   '/_authenticated/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRouteTypes {
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/usuarios'
     | '/equipe/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/usuarios'
     | '/equipe/$id'
   id:
     | '__root__'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/_authenticated/rankings'
     | '/_authenticated/relatorios'
     | '/_authenticated/resultados'
+    | '/_authenticated/usuarios'
     | '/_authenticated/equipe/$id'
   fileRoutesById: FileRoutesById
 }
@@ -431,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedResultadosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/usuarios': {
+      id: '/_authenticated/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof AuthenticatedUsuariosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/equipe/$id': {
       id: '/_authenticated/equipe/$id'
       path: '/equipe/$id'
@@ -459,6 +478,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedResultadosRoute: typeof AuthenticatedResultadosRoute
+  AuthenticatedUsuariosRoute: typeof AuthenticatedUsuariosRoute
   AuthenticatedEquipeIdRoute: typeof AuthenticatedEquipeIdRoute
 }
 
@@ -480,6 +500,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedResultadosRoute: AuthenticatedResultadosRoute,
+  AuthenticatedUsuariosRoute: AuthenticatedUsuariosRoute,
   AuthenticatedEquipeIdRoute: AuthenticatedEquipeIdRoute,
 }
 
