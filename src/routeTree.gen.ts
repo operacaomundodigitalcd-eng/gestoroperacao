@@ -24,6 +24,7 @@ import { Route as AuthenticatedEquipesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedFechamentoRouteImport } from './routes/_authenticated/fechamento'
 import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenticated/indicadores'
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
+import { Route as AuthenticatedPerfisDeAcessoRouteImport } from './routes/_authenticated/perfis-de-acesso'
 import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authenticated/planos-de-acao'
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
@@ -111,6 +112,12 @@ const AuthenticatedMetasRoute = AuthenticatedMetasRouteImport.update({
   path: '/metas',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPerfisDeAcessoRoute =
+  AuthenticatedPerfisDeAcessoRouteImport.update({
+    id: '/perfis-de-acesso',
+    path: '/perfis-de-acesso',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPlanosDeAcaoRoute =
   AuthenticatedPlanosDeAcaoRouteImport.update({
     id: '/planos-de-acao',
@@ -153,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
@@ -174,6 +182,7 @@ export interface FileRoutesByTo {
   '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
@@ -197,6 +206,7 @@ export interface FileRoutesById {
   '/_authenticated/fechamento': typeof AuthenticatedFechamentoRoute
   '/_authenticated/indicadores': typeof AuthenticatedIndicadoresRoute
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
+  '/_authenticated/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/_authenticated/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/fechamento'
     | '/indicadores'
     | '/metas'
+    | '/perfis-de-acesso'
     | '/planos-de-acao'
     | '/rankings'
     | '/relatorios'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/fechamento'
     | '/indicadores'
     | '/metas'
+    | '/perfis-de-acesso'
     | '/planos-de-acao'
     | '/rankings'
     | '/relatorios'
@@ -263,6 +275,7 @@ export interface FileRouteTypes {
     | '/_authenticated/fechamento'
     | '/_authenticated/indicadores'
     | '/_authenticated/metas'
+    | '/_authenticated/perfis-de-acesso'
     | '/_authenticated/planos-de-acao'
     | '/_authenticated/rankings'
     | '/_authenticated/relatorios'
@@ -383,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMetasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/perfis-de-acesso': {
+      id: '/_authenticated/perfis-de-acesso'
+      path: '/perfis-de-acesso'
+      fullPath: '/perfis-de-acesso'
+      preLoaderRoute: typeof AuthenticatedPerfisDeAcessoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/planos-de-acao': {
       id: '/_authenticated/planos-de-acao'
       path: '/planos-de-acao'
@@ -434,6 +454,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFechamentoRoute: typeof AuthenticatedFechamentoRoute
   AuthenticatedIndicadoresRoute: typeof AuthenticatedIndicadoresRoute
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
+  AuthenticatedPerfisDeAcessoRoute: typeof AuthenticatedPerfisDeAcessoRoute
   AuthenticatedPlanosDeAcaoRoute: typeof AuthenticatedPlanosDeAcaoRoute
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
@@ -454,6 +475,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFechamentoRoute: AuthenticatedFechamentoRoute,
   AuthenticatedIndicadoresRoute: AuthenticatedIndicadoresRoute,
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
+  AuthenticatedPerfisDeAcessoRoute: AuthenticatedPerfisDeAcessoRoute,
   AuthenticatedPlanosDeAcaoRoute: AuthenticatedPlanosDeAcaoRoute,
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
