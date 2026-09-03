@@ -162,9 +162,9 @@ function PerfisDeAcesso() {
                   <td className="py-3 pr-3 font-medium">
                     {p.name}
                     {p.is_super_admin && (
-                      <Pill tone="destructive" className="ml-2">
-                        Protegido
-                      </Pill>
+                      <span className="ml-2 inline-block align-middle">
+                        <Pill tone="destructive">Protegido</Pill>
+                      </span>
                     )}
                   </td>
                   <td className="max-w-[280px] px-3 py-3 text-muted-foreground">{p.description ?? "—"}</td>
@@ -431,7 +431,14 @@ function EditorPerfil({
               onClick={async () => {
                 setSalvando(true);
                 try {
-                  await onSalvar({ id: perfil?.id, name: nome, description: descricao, active: ativo, codes, baseRoleId: base || undefined });
+                  await onSalvar({
+                    ...(perfil ? { id: perfil.id } : {}),
+                    ...(base ? { baseRoleId: base } : {}),
+                    name: nome,
+                    description: descricao,
+                    active: ativo,
+                    codes,
+                  });
                 } catch (e) {
                   toast.error(e instanceof Error ? e.message : "Não foi possível salvar.");
                 } finally {
