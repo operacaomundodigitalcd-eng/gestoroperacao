@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-
-export type AppRole = "admin" | "gestor" | "supervisor" | "colaborador" | "visualizador";
+import { meuAcesso, type EscopoItem } from "@/lib/acesso.functions";
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [roles, setRoles] = useState<AppRole[]>([]);
   const [nome, setNome] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const buscarAcesso = useServerFn(meuAcesso);
 
   useEffect(() => {
     let active = true;
 
     const carregarPerfil = async (uid: string) => {
-      const [{ data: rolesData }, { data: perfil }] = await Promise.all([
-        supabase.from("user_roles").select("role").eq("user_id", uid),
-        supabase.from("profiles").select("nome").eq("id", uid).maybeSingle(),
-      ]);
+      const { data: perfil } = await supabase.from("profiles").select("nome").eq("id", uid).maybeSingle();
       if (!active) return;
-      setRoles((rolesData ?? []).map((r) => r.role as AppRole));
       setNome(perfil?.nome ?? "");
     };
 
@@ -30,7 +27,6 @@ export function useAuth() {
       if (s?.user) {
         setTimeout(() => void carregarPerfil(s.user.id), 0);
       } else {
-        setRoles([]);
         setNome("");
       }
     });
@@ -49,17 +45,28 @@ export function useAuth() {
     };
   }, []);
 
-  const temPapel = (...r: AppRole[]) => roles.some((x) => r.includes(x));
+  const { data: acesso, isLoading: carregandoAcesso } = useQuery({
+    queryKey: ["meu-acesso", user?.id ?? "anon"],
+    queryFn: () => buscarAcesso(),
+    enabled: !!user,
+    staleTime: 60_000,
+  });
+
+  const codes: string[] = acesso?.codes ?? [];
+  const escopos: EscopoItem[] = acesso?.escopos ?? [];
+
+  /** Verifica uma permissão pelo código, ex.: can("goals.edit"). */
+  const can = (code: string) => codes.includes(code);
 
   return {
     session,
     user,
-    roles,
     nome,
-    loading,
-    temPapel,
-    podeGerenciar: temPapel("admin", "gestor"),
-    podeLancar: temPapel("admin", "gestor", "supervisor"),
-    ehAdmin: temPapel("admin"),
+    loading: loading || (!!user && carregandoAcesso),
+    can,
+    codes,
+    escopos,
+    ehSuperAdmin: acesso?.superAdmin ?? false,
+    perfilNome: acesso?.perfis[0]?.name ?? null,
   };
 }
