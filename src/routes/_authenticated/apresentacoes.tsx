@@ -38,7 +38,8 @@ interface ApresentacaoRow {
 function Apresentacoes() {
   const qc = useQueryClient();
   const hoje = new Date();
-  const { podeGerenciar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("presentations.edit");
   const [ano, setAno] = useState(hoje.getFullYear());
   const [mes, setMes] = useState(hoje.getMonth() + 1);
   const { data: resultados = [] } = useResultados(ano);

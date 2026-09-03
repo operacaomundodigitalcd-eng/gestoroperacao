@@ -38,7 +38,8 @@ interface Fechamento {
 function Resultados() {
   const qc = useQueryClient();
   const hoje = new Date();
-  const { podeLancar } = useAuth();
+  const { can } = useAuth();
+  const podeLancar = can("results.create");
   const [ano, setAno] = useState(hoje.getFullYear());
   const [mes, setMes] = useState(hoje.getMonth() + 1);
 

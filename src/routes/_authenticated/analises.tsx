@@ -41,7 +41,8 @@ interface AnaliseRow {
 function Analises() {
   const qc = useQueryClient();
   const hoje = new Date();
-  const { podeLancar } = useAuth();
+  const { can } = useAuth();
+  const podeLancar = can("analyses.create");
   const { data: analises = [], isLoading } = useTabela<AnaliseRow>(
     "analyses",
     "id, ano, mes, analise, causa, impacto, pontos_positivos, pontos_negativos, acoes, justificativa, indicators(nome)",

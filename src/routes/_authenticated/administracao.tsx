@@ -39,7 +39,8 @@ interface Log {
 }
 
 function Administracao() {
-  const { ehAdmin } = useAuth();
+  const { can } = useAuth();
+  const ehAdmin = can("audit.view");
   const buscarPapeis = useServerFn(listarPapeis);
   const { data: perfis = [] } = useTabela<Perfil>("profiles", "id, nome, email, created_at", "nome");
   const { data: papeis = [] } = useQuery<PapelUsuario[]>({

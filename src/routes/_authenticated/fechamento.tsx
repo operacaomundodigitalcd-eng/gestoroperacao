@@ -38,7 +38,8 @@ interface Fechado {
 function Fechamento() {
   const qc = useQueryClient();
   const hoje = new Date();
-  const { podeGerenciar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("results.reopen_period");
   const [ano, setAno] = useState(hoje.getFullYear());
   const [mes, setMes] = useState(hoje.getMonth() + 1);
 

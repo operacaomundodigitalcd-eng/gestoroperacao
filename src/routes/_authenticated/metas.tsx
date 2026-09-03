@@ -51,7 +51,9 @@ interface MetaRow {
 function Metas() {
   const qc = useQueryClient();
   const hoje = new Date();
-  const { podeGerenciar, podeLancar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("goals.edit");
+  const podeLancar = can("results.create");
   const [ano, setAno] = useState(hoje.getFullYear());
 
   const { data: metas = [], isLoading } = useTabela<MetaRow>(
