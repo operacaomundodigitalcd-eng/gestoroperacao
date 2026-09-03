@@ -46,7 +46,9 @@ interface Colaborador {
 
 function Colaboradores() {
   const qc = useQueryClient();
-  const { podeGerenciar, ehAdmin } = useAuth();
+  const { can, ehSuperAdmin } = useAuth();
+  const podeGerenciar = can("employees.edit");
+  const ehAdmin = ehSuperAdmin;
   const [busca, setBusca] = useState("");
 
   const { data: pessoas = [], isLoading } = useTabela<Colaborador>(

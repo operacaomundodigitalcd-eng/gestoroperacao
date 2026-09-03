@@ -32,7 +32,8 @@ type Opcao = { id: string; nome: string };
 
 function Indicadores() {
   const qc = useQueryClient();
-  const { podeGerenciar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("indicators.edit");
   const { data: indicadores = [], isLoading } = useIndicadores();
   const { data: categorias = [] } = useTabela<Opcao>("indicator_categories", "id, nome", "nome");
   const { data: unidades = [] } = useTabela<Opcao>("measure_units", "id, nome", "nome");

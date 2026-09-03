@@ -24,10 +24,12 @@ import { Route as AuthenticatedEquipesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedFechamentoRouteImport } from './routes/_authenticated/fechamento'
 import { Route as AuthenticatedIndicadoresRouteImport } from './routes/_authenticated/indicadores'
 import { Route as AuthenticatedMetasRouteImport } from './routes/_authenticated/metas'
+import { Route as AuthenticatedPerfisDeAcessoRouteImport } from './routes/_authenticated/perfis-de-acesso'
 import { Route as AuthenticatedPlanosDeAcaoRouteImport } from './routes/_authenticated/planos-de-acao'
 import { Route as AuthenticatedRankingsRouteImport } from './routes/_authenticated/rankings'
 import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
 import { Route as AuthenticatedResultadosRouteImport } from './routes/_authenticated/resultados'
+import { Route as AuthenticatedUsuariosRouteImport } from './routes/_authenticated/usuarios'
 import { Route as AuthenticatedEquipeIdRouteImport } from './routes/_authenticated/equipe.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -111,6 +113,12 @@ const AuthenticatedMetasRoute = AuthenticatedMetasRouteImport.update({
   path: '/metas',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPerfisDeAcessoRoute =
+  AuthenticatedPerfisDeAcessoRouteImport.update({
+    id: '/perfis-de-acesso',
+    path: '/perfis-de-acesso',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPlanosDeAcaoRoute =
   AuthenticatedPlanosDeAcaoRouteImport.update({
     id: '/planos-de-acao',
@@ -130,6 +138,11 @@ const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
 const AuthenticatedResultadosRoute = AuthenticatedResultadosRouteImport.update({
   id: '/resultados',
   path: '/resultados',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedUsuariosRoute = AuthenticatedUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedEquipeIdRoute = AuthenticatedEquipeIdRouteImport.update({
@@ -153,10 +166,12 @@ export interface FileRoutesByFullPath {
   '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/usuarios': typeof AuthenticatedUsuariosRoute
   '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesByTo {
@@ -174,10 +189,12 @@ export interface FileRoutesByTo {
   '/fechamento': typeof AuthenticatedFechamentoRoute
   '/indicadores': typeof AuthenticatedIndicadoresRoute
   '/metas': typeof AuthenticatedMetasRoute
+  '/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/rankings': typeof AuthenticatedRankingsRoute
   '/relatorios': typeof AuthenticatedRelatoriosRoute
   '/resultados': typeof AuthenticatedResultadosRoute
+  '/usuarios': typeof AuthenticatedUsuariosRoute
   '/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRoutesById {
@@ -197,10 +214,12 @@ export interface FileRoutesById {
   '/_authenticated/fechamento': typeof AuthenticatedFechamentoRoute
   '/_authenticated/indicadores': typeof AuthenticatedIndicadoresRoute
   '/_authenticated/metas': typeof AuthenticatedMetasRoute
+  '/_authenticated/perfis-de-acesso': typeof AuthenticatedPerfisDeAcessoRoute
   '/_authenticated/planos-de-acao': typeof AuthenticatedPlanosDeAcaoRoute
   '/_authenticated/rankings': typeof AuthenticatedRankingsRoute
   '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
   '/_authenticated/resultados': typeof AuthenticatedResultadosRoute
+  '/_authenticated/usuarios': typeof AuthenticatedUsuariosRoute
   '/_authenticated/equipe/$id': typeof AuthenticatedEquipeIdRoute
 }
 export interface FileRouteTypes {
@@ -220,10 +239,12 @@ export interface FileRouteTypes {
     | '/fechamento'
     | '/indicadores'
     | '/metas'
+    | '/perfis-de-acesso'
     | '/planos-de-acao'
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/usuarios'
     | '/equipe/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -241,10 +262,12 @@ export interface FileRouteTypes {
     | '/fechamento'
     | '/indicadores'
     | '/metas'
+    | '/perfis-de-acesso'
     | '/planos-de-acao'
     | '/rankings'
     | '/relatorios'
     | '/resultados'
+    | '/usuarios'
     | '/equipe/$id'
   id:
     | '__root__'
@@ -263,10 +286,12 @@ export interface FileRouteTypes {
     | '/_authenticated/fechamento'
     | '/_authenticated/indicadores'
     | '/_authenticated/metas'
+    | '/_authenticated/perfis-de-acesso'
     | '/_authenticated/planos-de-acao'
     | '/_authenticated/rankings'
     | '/_authenticated/relatorios'
     | '/_authenticated/resultados'
+    | '/_authenticated/usuarios'
     | '/_authenticated/equipe/$id'
   fileRoutesById: FileRoutesById
 }
@@ -383,6 +408,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMetasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/perfis-de-acesso': {
+      id: '/_authenticated/perfis-de-acesso'
+      path: '/perfis-de-acesso'
+      fullPath: '/perfis-de-acesso'
+      preLoaderRoute: typeof AuthenticatedPerfisDeAcessoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/planos-de-acao': {
       id: '/_authenticated/planos-de-acao'
       path: '/planos-de-acao'
@@ -411,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedResultadosRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/usuarios': {
+      id: '/_authenticated/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof AuthenticatedUsuariosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/equipe/$id': {
       id: '/_authenticated/equipe/$id'
       path: '/equipe/$id'
@@ -434,10 +473,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFechamentoRoute: typeof AuthenticatedFechamentoRoute
   AuthenticatedIndicadoresRoute: typeof AuthenticatedIndicadoresRoute
   AuthenticatedMetasRoute: typeof AuthenticatedMetasRoute
+  AuthenticatedPerfisDeAcessoRoute: typeof AuthenticatedPerfisDeAcessoRoute
   AuthenticatedPlanosDeAcaoRoute: typeof AuthenticatedPlanosDeAcaoRoute
   AuthenticatedRankingsRoute: typeof AuthenticatedRankingsRoute
   AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
   AuthenticatedResultadosRoute: typeof AuthenticatedResultadosRoute
+  AuthenticatedUsuariosRoute: typeof AuthenticatedUsuariosRoute
   AuthenticatedEquipeIdRoute: typeof AuthenticatedEquipeIdRoute
 }
 
@@ -454,10 +495,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFechamentoRoute: AuthenticatedFechamentoRoute,
   AuthenticatedIndicadoresRoute: AuthenticatedIndicadoresRoute,
   AuthenticatedMetasRoute: AuthenticatedMetasRoute,
+  AuthenticatedPerfisDeAcessoRoute: AuthenticatedPerfisDeAcessoRoute,
   AuthenticatedPlanosDeAcaoRoute: AuthenticatedPlanosDeAcaoRoute,
   AuthenticatedRankingsRoute: AuthenticatedRankingsRoute,
   AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
   AuthenticatedResultadosRoute: AuthenticatedResultadosRoute,
+  AuthenticatedUsuariosRoute: AuthenticatedUsuariosRoute,
   AuthenticatedEquipeIdRoute: AuthenticatedEquipeIdRoute,
 }
 

@@ -44,7 +44,8 @@ interface SubgrupoRow {
 
 function Equipes() {
   const qc = useQueryClient();
-  const { podeGerenciar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("settings.edit");
   const { data: equipes = [], isLoading } = useTabela<EquipeRow>(
     "teams",
     "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",

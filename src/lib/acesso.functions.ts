@@ -349,7 +349,7 @@ export const criarUsuario = createServerFn({ method: "POST" })
 
     const { data: criado, error } = await supabaseAdmin.auth.admin.createUser({
       email: data.email,
-      password: data.senha,
+      password: data.senha!,
       email_confirm: true,
       user_metadata: { nome: data.nome },
     });

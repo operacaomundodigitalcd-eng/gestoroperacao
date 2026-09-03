@@ -34,7 +34,8 @@ type Simples = { id: string; nome: string; descricao?: string | null };
 
 function Departamentos() {
   const qc = useQueryClient();
-  const { podeGerenciar } = useAuth();
+  const { can } = useAuth();
+  const podeGerenciar = can("settings.edit");
   const { data: departamentos = [] } = useTabela<DepRow>("departments", "id, nome, descricao, status", "nome");
   const { data: cargos = [] } = useTabela<Simples>("positions", "id, nome, descricao", "nome");
   const { data: funcoes = [] } = useTabela<Simples>("job_functions", "id, nome, descricao", "nome");

@@ -45,7 +45,8 @@ const COLUNAS = ["pendente", "em_andamento", "concluida", "atrasada"] as const;
 
 function Planos() {
   const qc = useQueryClient();
-  const { podeLancar } = useAuth();
+  const { can } = useAuth();
+  const podeLancar = can("action_plans.edit");
   const [filtro, setFiltro] = useState("todos");
   const { data: planos = [], isLoading } = useTabela<PlanoRow>(
     "action_plans",
