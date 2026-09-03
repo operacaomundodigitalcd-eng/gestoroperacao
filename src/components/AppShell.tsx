@@ -3,7 +3,7 @@ import { useState, type ReactNode } from "react";
 import { Menu, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { ROLE_LABEL, MESES } from "@/lib/perf";
+import { MESES } from "@/lib/perf";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -74,7 +74,7 @@ function NavConteudo({ onNavigate }: { onNavigate?: () => void }) {
       </Link>
 
       <nav className="flex flex-col gap-3 overflow-y-auto text-sm">
-        {MENU.map((grupo) => (
+        {grupos.map((grupo) => (
           <div key={grupo.titulo}>
             <p className="px-3 pb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/40">
               {grupo.codigo} · {grupo.titulo}
@@ -122,7 +122,7 @@ export function AppShell({
   acoes?: ReactNode;
   children: ReactNode;
 }) {
-  const { nome, roles } = useAuth();
+  const { nome, perfilNome } = useAuth();
   const [aberto, setAberto] = useState(false);
   const primeiroNome = (nome || "usuário").split(" ")[0];
 
@@ -160,7 +160,7 @@ export function AppShell({
               <div className="text-right leading-tight">
                 <p className="text-[13px] font-semibold">{primeiroNome}</p>
                 <p className="font-mono text-[10px] text-muted-foreground">
-                  {roles[0] ? ROLE_LABEL[roles[0]] : "Sem grupo"}
+                  {perfilNome ?? "Sem perfil"}
                 </p>
               </div>
               <Button
