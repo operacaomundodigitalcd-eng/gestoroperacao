@@ -8,49 +8,59 @@ import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
-type Item = { to: string; label: string };
+type Item = { to: string; label: string; perm: string };
 type Grupo = { titulo: string; codigo: string; itens: Item[] };
 
 export const MENU: Grupo[] = [
-  { titulo: "Dashboard", codigo: "01", itens: [{ to: "/dashboard", label: "Visão Gerencial" }] },
+  { titulo: "Dashboard", codigo: "01", itens: [{ to: "/dashboard", label: "Visão Gerencial", perm: "dashboard.view" }] },
   {
     titulo: "Performance",
     codigo: "02",
     itens: [
-      { to: "/indicadores", label: "Indicadores" },
-      { to: "/corporativo", label: "Corporativo" },
-      { to: "/metas", label: "Metas" },
-      { to: "/resultados", label: "Resultados" },
-      { to: "/comparativos", label: "Comparativos" },
-      { to: "/rankings", label: "Rankings" },
+      { to: "/indicadores", label: "Indicadores", perm: "indicators.view" },
+      { to: "/corporativo", label: "Corporativo", perm: "dashboard.executive_view" },
+      { to: "/metas", label: "Metas", perm: "goals.view" },
+      { to: "/resultados", label: "Resultados", perm: "results.view" },
+      { to: "/comparativos", label: "Comparativos", perm: "results.view" },
+      { to: "/rankings", label: "Rankings", perm: "results.view" },
     ],
   },
   {
     titulo: "Pessoas",
     codigo: "03",
     itens: [
-      { to: "/colaboradores", label: "Colaboradores" },
-      { to: "/equipes", label: "Equipes" },
-      { to: "/departamentos", label: "Departamentos" },
+      { to: "/colaboradores", label: "Colaboradores", perm: "employees.view" },
+      { to: "/equipes", label: "Equipes", perm: "employees.view" },
+      { to: "/departamentos", label: "Departamentos", perm: "employees.view" },
     ],
   },
   {
     titulo: "Gestão",
     codigo: "04",
     itens: [
-      { to: "/analises", label: "Análises" },
-      { to: "/planos-de-acao", label: "Planos de Ação" },
-      { to: "/fechamento", label: "Fechamento Mensal" },
+      { to: "/analises", label: "Análises", perm: "analyses.view" },
+      { to: "/planos-de-acao", label: "Planos de Ação", perm: "action_plans.view" },
+      { to: "/fechamento", label: "Fechamento Mensal", perm: "results.view" },
     ],
   },
-  { titulo: "Apresentações", codigo: "05", itens: [{ to: "/apresentacoes", label: "Apresentações" }] },
-  { titulo: "Relatórios", codigo: "06", itens: [{ to: "/relatorios", label: "Relatórios" }] },
-  { titulo: "Administração", codigo: "07", itens: [{ to: "/administracao", label: "Usuários e Auditoria" }] },
+  { titulo: "Apresentações", codigo: "05", itens: [{ to: "/apresentacoes", label: "Apresentações", perm: "presentations.view" }] },
+  { titulo: "Relatórios", codigo: "06", itens: [{ to: "/relatorios", label: "Relatórios", perm: "reports.view" }] },
+  {
+    titulo: "Administração",
+    codigo: "07",
+    itens: [
+      { to: "/usuarios", label: "Usuários", perm: "users.view" },
+      { to: "/perfis-de-acesso", label: "Perfis de Acesso", perm: "roles.view" },
+      { to: "/administracao", label: "Auditoria", perm: "audit.view" },
+    ],
+  },
 ];
 
 function NavConteudo({ onNavigate }: { onNavigate?: () => void }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { can, loading } = useAuth();
   const hoje = new Date();
+  const grupos = MENU.map((g) => ({ ...g, itens: g.itens.filter((i) => loading || can(i.perm)) })).filter((g) => g.itens.length);
 
   return (
     <div className="flex h-full flex-col gap-5 bg-sidebar px-4 py-5 text-sidebar-foreground">
