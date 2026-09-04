@@ -30,20 +30,10 @@ interface Log {
 function Administracao() {
   const { can } = useAuth();
   const ehAdmin = can("audit.view");
-  const buscarPapeis = useServerFn(listarPapeis);
-  const { data: perfis = [] } = useTabela<Perfil>("profiles", "id, nome, email, created_at", "nome");
-  const { data: papeis = [] } = useQuery<PapelUsuario[]>({
-    queryKey: ["papeis-admin"],
-    queryFn: () => buscarPapeis(),
-    enabled: ehAdmin,
-  });
   const { data: logs = [] } = useTabela<Log>("audit_logs", "id, operacao, tabela, descricao, user_email, created_at", "created_at");
 
-  const papeisDe = (id: string) => papeis.filter((p) => p.user_id === id).map((p) => ROLE_LABEL[p.role] ?? p.role);
-
-
   return (
-    <AppShell titulo="Usuários e Auditoria" breadcrumb="07 · Administração">
+    <AppShell titulo="Auditoria" breadcrumb="07 · Administração">
       {!ehAdmin && (
         <div className="border-l-2 border-warning bg-warning/10 p-3 text-sm">
           Você está visualizando apenas os registros permitidos ao seu grupo de permissão.
