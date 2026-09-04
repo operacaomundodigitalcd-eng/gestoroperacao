@@ -1,21 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { AppShell, Painel } from "@/components/AppShell";
 import { Pill } from "@/components/StatusBadge";
 import { useAuth } from "@/hooks/useAuth";
 import { useTabela } from "@/lib/dados";
-import { listarPapeis, type PapelUsuario } from "@/lib/admin.functions";
-import { ROLE_LABEL } from "@/lib/perf";
-
 
 export const Route = createFileRoute("/_authenticated/administracao")({
   head: () => ({
     meta: [
-      { title: "Usuários e Auditoria · Ritmo" },
-      { name: "description", content: "Usuários, grupos de permissão e trilha de auditoria com histórico de operações do sistema." },
-      { property: "og:title", content: "Usuários e Auditoria · Ritmo" },
-      { property: "og:description", content: "Administração de acessos e rastreabilidade das operações." },
+      { title: "Auditoria · Ritmo" },
+      { name: "description", content: "Trilha de auditoria com histórico completo das operações realizadas no sistema." },
+      { property: "og:title", content: "Auditoria · Ritmo" },
+      { property: "og:description", content: "Rastreabilidade das operações e alterações de acesso." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -23,12 +18,6 @@ export const Route = createFileRoute("/_authenticated/administracao")({
   component: Administracao,
 });
 
-interface Perfil {
-  id: string;
-  nome: string;
-  email: string;
-  created_at: string;
-}
 interface Log {
   id: string;
   operacao: string;
