@@ -87,7 +87,7 @@ export function FormDialog({
               });
               setAberto(false);
             } catch (err) {
-              setErro(err instanceof Error ? err.message : "Não foi possível salvar.");
+              setErro(mensagemDeErro(err));
             } finally {
               setSalvando(false);
             }
