@@ -61,49 +61,6 @@ function Administracao() {
         </div>
       )}
 
-      <Painel titulo="Usuários" descricao={`${perfis.length} contas com acesso`}>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-left font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                <th className="py-2.5 pr-3 font-medium">Usuário</th>
-                <th className="px-3 py-2.5 font-medium">E-mail</th>
-                <th className="px-3 py-2.5 font-medium">Grupos</th>
-                <th className="py-2.5 pl-3 font-medium">Criado em</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {perfis.map((p) => (
-                <tr key={p.id} className="transition-colors hover:bg-sand/40">
-                  <td className="py-3 pr-3 font-medium">{p.nome}</td>
-                  <td className="px-3 py-3 font-mono text-[12px] text-muted-foreground">{p.email}</td>
-                  <td className="px-3 py-3">
-                    <div className="flex flex-wrap gap-1">
-                      {papeisDe(p.id).map((r) => (
-                        <Pill key={r} tone="info">
-                          {r}
-                        </Pill>
-                      ))}
-                      {papeisDe(p.id).length === 0 && <span className="text-muted-foreground">—</span>}
-                    </div>
-                  </td>
-                  <td className="py-3 pl-3 font-mono text-[11px] text-muted-foreground">
-                    {new Date(p.created_at).toLocaleDateString("pt-BR")}
-                  </td>
-                </tr>
-              ))}
-              {perfis.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="py-6 text-center text-muted-foreground">
-                    Nenhum usuário visível.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </Painel>
-
       <Painel titulo="Trilha de auditoria" descricao={`${logs.length} operações registradas`}>
         <ul className="divide-y divide-border text-sm">
           {logs.slice(0, 50).map((l) => (
