@@ -1,21 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { AppShell, Painel } from "@/components/AppShell";
 import { Pill } from "@/components/StatusBadge";
 import { useAuth } from "@/hooks/useAuth";
 import { useTabela } from "@/lib/dados";
-import { listarPapeis, type PapelUsuario } from "@/lib/admin.functions";
-import { ROLE_LABEL } from "@/lib/perf";
-
 
 export const Route = createFileRoute("/_authenticated/administracao")({
   head: () => ({
     meta: [
-      { title: "Usuários e Auditoria · Ritmo" },
-      { name: "description", content: "Usuários, grupos de permissão e trilha de auditoria com histórico de operações do sistema." },
-      { property: "og:title", content: "Usuários e Auditoria · Ritmo" },
-      { property: "og:description", content: "Administração de acessos e rastreabilidade das operações." },
+      { title: "Auditoria · Ritmo" },
+      { name: "description", content: "Trilha de auditoria com histórico completo das operações realizadas no sistema." },
+      { property: "og:title", content: "Auditoria · Ritmo" },
+      { property: "og:description", content: "Rastreabilidade das operações e alterações de acesso." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -23,12 +18,6 @@ export const Route = createFileRoute("/_authenticated/administracao")({
   component: Administracao,
 });
 
-interface Perfil {
-  id: string;
-  nome: string;
-  email: string;
-  created_at: string;
-}
 interface Log {
   id: string;
   operacao: string;
@@ -41,68 +30,15 @@ interface Log {
 function Administracao() {
   const { can } = useAuth();
   const ehAdmin = can("audit.view");
-  const buscarPapeis = useServerFn(listarPapeis);
-  const { data: perfis = [] } = useTabela<Perfil>("profiles", "id, nome, email, created_at", "nome");
-  const { data: papeis = [] } = useQuery<PapelUsuario[]>({
-    queryKey: ["papeis-admin"],
-    queryFn: () => buscarPapeis(),
-    enabled: ehAdmin,
-  });
   const { data: logs = [] } = useTabela<Log>("audit_logs", "id, operacao, tabela, descricao, user_email, created_at", "created_at");
 
-  const papeisDe = (id: string) => papeis.filter((p) => p.user_id === id).map((p) => ROLE_LABEL[p.role] ?? p.role);
-
-
   return (
-    <AppShell titulo="Usuários e Auditoria" breadcrumb="07 · Administração">
+    <AppShell titulo="Auditoria" breadcrumb="07 · Administração">
       {!ehAdmin && (
         <div className="border-l-2 border-warning bg-warning/10 p-3 text-sm">
           Você está visualizando apenas os registros permitidos ao seu grupo de permissão.
         </div>
       )}
-
-      <Painel titulo="Usuários" descricao={`${perfis.length} contas com acesso`}>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-left font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                <th className="py-2.5 pr-3 font-medium">Usuário</th>
-                <th className="px-3 py-2.5 font-medium">E-mail</th>
-                <th className="px-3 py-2.5 font-medium">Grupos</th>
-                <th className="py-2.5 pl-3 font-medium">Criado em</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {perfis.map((p) => (
-                <tr key={p.id} className="transition-colors hover:bg-sand/40">
-                  <td className="py-3 pr-3 font-medium">{p.nome}</td>
-                  <td className="px-3 py-3 font-mono text-[12px] text-muted-foreground">{p.email}</td>
-                  <td className="px-3 py-3">
-                    <div className="flex flex-wrap gap-1">
-                      {papeisDe(p.id).map((r) => (
-                        <Pill key={r} tone="info">
-                          {r}
-                        </Pill>
-                      ))}
-                      {papeisDe(p.id).length === 0 && <span className="text-muted-foreground">—</span>}
-                    </div>
-                  </td>
-                  <td className="py-3 pl-3 font-mono text-[11px] text-muted-foreground">
-                    {new Date(p.created_at).toLocaleDateString("pt-BR")}
-                  </td>
-                </tr>
-              ))}
-              {perfis.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="py-6 text-center text-muted-foreground">
-                    Nenhum usuário visível.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </Painel>
 
       <Painel titulo="Trilha de auditoria" descricao={`${logs.length} operações registradas`}>
         <ul className="divide-y divide-border text-sm">
