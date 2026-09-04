@@ -28,6 +28,22 @@ export type Valores = {
   num: (campo: string, padrao: number) => number;
 };
 
+/** Converte erros do backend em mensagens claras para quem está usando o sistema. */
+export function mensagemDeErro(err: unknown): string {
+  const e = err as { code?: string; message?: string; details?: string; hint?: string } | null;
+  if (import.meta.env.DEV) {
+    console.error("Erro backend:", { code: e?.code, message: e?.message, details: e?.details, hint: e?.hint });
+  }
+  const texto = e?.message ?? "";
+  const semPermissao =
+    e?.code === "42501" ||
+    e?.code === "PGRST301" ||
+    /permission denied|row-level security|acesso negado/i.test(texto);
+  if (semPermissao) return "Você não possui permissão para realizar esta operação.";
+  if (texto) return texto;
+  return "Não foi possível salvar. Verifique os dados e tente novamente.";
+}
+
 export function FormDialog({
   titulo,
   descricao,
