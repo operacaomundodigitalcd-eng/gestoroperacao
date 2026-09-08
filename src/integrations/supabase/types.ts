@@ -228,6 +228,74 @@ export type Database = {
         }
         Relationships: []
       }
+      employee_team_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          fim: string | null
+          id: string
+          inicio: string
+          motivo: string | null
+          subgroup_id: string | null
+          team_id: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          department_id?: string | null
+          employee_id: string
+          fim?: string | null
+          id?: string
+          inicio?: string
+          motivo?: string | null
+          subgroup_id?: string | null
+          team_id?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          department_id?: string | null
+          employee_id?: string
+          fim?: string | null
+          id?: string
+          inicio?: string
+          motivo?: string | null
+          subgroup_id?: string | null
+          team_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employee_team_history_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_team_history_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_team_history_subgroup_id_fkey"
+            columns: ["subgroup_id"]
+            isOneToOne: false
+            referencedRelation: "subgroups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_team_history_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employees: {
         Row: {
           chefia_id: string | null
@@ -1166,6 +1234,7 @@ export type Database = {
           gestor_id: string | null
           id: string
           nome: string
+          observacoes: string | null
           status: string
           supervisor_id: string | null
           updated_at: string
@@ -1177,6 +1246,7 @@ export type Database = {
           gestor_id?: string | null
           id?: string
           nome: string
+          observacoes?: string | null
           status?: string
           supervisor_id?: string | null
           updated_at?: string
@@ -1188,6 +1258,7 @@ export type Database = {
           gestor_id?: string | null
           id?: string
           nome?: string
+          observacoes?: string | null
           status?: string
           supervisor_id?: string | null
           updated_at?: string
