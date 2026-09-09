@@ -87,6 +87,7 @@ export function useTabela<T = Record<string, unknown>>(
     | "teams"
     | "subgroups"
     | "employees"
+    | "employee_team_history"
     | "goals"
     | "action_plans"
     | "analyses"
