@@ -6,7 +6,7 @@ import { Pill } from "@/components/StatusBadge";
 import { FormDialog } from "@/components/FormDialog";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { EquipeAcoes, useCamposEquipe, useEquipePermissoes } from "@/components/EquipeAcoes";
 import { registrarAuditoria, useTabela } from "@/lib/dados";
 import { toast } from "sonner";
 
@@ -30,6 +30,10 @@ interface EquipeRow {
   nome: string;
   descricao: string | null;
   status: string;
+  observacoes: string | null;
+  department_id: string | null;
+  gestor_id: string | null;
+  supervisor_id: string | null;
   departments: { nome: string } | null;
   gestor: { nome: string } | null;
   supervisor: { nome: string } | null;
@@ -44,18 +48,15 @@ interface SubgrupoRow {
 
 function Equipes() {
   const qc = useQueryClient();
-  const { can } = useAuth();
-  const podeGerenciar = can("settings.edit");
+  const permEquipe = useEquipePermissoes();
+  const podeGerenciar = permEquipe.podeCriar;
   const { data: equipes = [], isLoading } = useTabela<EquipeRow>(
     "teams",
-    "id, nome, descricao, status, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",
+    "id, nome, descricao, status, observacoes, department_id, gestor_id, supervisor_id, departments(nome), gestor:employees!teams_gestor_fk(nome), supervisor:employees!teams_supervisor_fk(nome)",
     "nome",
   );
   const { data: subgrupos = [] } = useTabela<SubgrupoRow>("subgroups", "id, nome, descricao, status, teams(nome)", "nome");
-  const { data: departamentos = [] } = useTabela<Opcao>("departments", "id, nome", "nome");
-  const { data: pessoas = [] } = useTabela<Opcao>("employees", "id, nome", "nome");
-
-  const opcoes = (arr: Opcao[]) => arr.map((o) => ({ value: o.id, label: o.nome }));
+  const camposEquipe = useCamposEquipe();
 
   return (
     <AppShell
@@ -93,13 +94,8 @@ function Equipes() {
                 <Plus className="size-4" /> Nova equipe
               </Button>
             }
-            campos={[
-              { name: "nome", label: "Nome da equipe", obrigatorio: true, colSpan: 2 },
-              { name: "department_id", label: "Departamento", tipo: "select", opcoes: opcoes(departamentos) },
-              { name: "gestor_id", label: "Gestor", tipo: "select", opcoes: opcoes(pessoas) },
-              { name: "supervisor_id", label: "Supervisor", tipo: "select", opcoes: opcoes(pessoas) },
-              { name: "descricao", label: "Descrição", tipo: "textarea" },
-            ]}
+            campos={camposEquipe}
+            valoresIniciais={{ status: "ativo" }}
             onSubmit={async (v) => {
               const nome = v.req("nome");
               const { error } = await supabase.from("teams").insert({
@@ -107,7 +103,9 @@ function Equipes() {
                 department_id: v.txt("department_id"),
                 gestor_id: v.txt("gestor_id"),
                 supervisor_id: v.txt("supervisor_id"),
+                status: v.txt("status") ?? "ativo",
                 descricao: v.txt("descricao"),
+                observacoes: v.txt("observacoes"),
               });
               if (error) throw error;
               await registrarAuditoria({ operacao: "criar", tabela: "teams", descricao: `Equipe criada: ${nome}` });
@@ -122,24 +120,24 @@ function Equipes() {
         <div className="grid gap-3 md:grid-cols-2">
           {isLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
           {equipes.map((e) => (
-            <Link
-              key={e.id}
-              to="/equipe/$id"
-              params={{ id: e.id }}
-              className="block border-l-2 border-primary bg-sand/40 p-4 transition-colors hover:bg-sand"
-            >
+            <div key={e.id} className="border-l-2 border-primary bg-sand/40 p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-display text-base font-bold tracking-tight">{e.nome}</p>
+                  <Link to="/equipe/$id" params={{ id: e.id }} className="font-display text-base font-bold tracking-tight hover:underline">
+                    {e.nome}
+                  </Link>
                   <p className="font-mono text-[11px] text-muted-foreground">{e.departments?.nome ?? "sem departamento"}</p>
                 </div>
-                <Pill tone={e.status === "ativo" ? "success" : "warning"}>{e.status}</Pill>
+                <Pill tone={e.status === "ativo" ? "success" : "warning"}>{e.status === "ativo" ? "Ativa" : "Inativa"}</Pill>
               </div>
               {e.descricao && <p className="mt-2 text-sm text-muted-foreground">{e.descricao}</p>}
               <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"} · ver painel →
+                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"}
               </p>
-            </Link>
+              <div className="mt-3">
+                <EquipeAcoes equipe={e} />
+              </div>
+            </div>
           ))}
         </div>
       </Painel>
