@@ -97,13 +97,8 @@ function Equipes() {
                 <Plus className="size-4" /> Nova equipe
               </Button>
             }
-            campos={[
-              { name: "nome", label: "Nome da equipe", obrigatorio: true, colSpan: 2 },
-              { name: "department_id", label: "Departamento", tipo: "select", opcoes: opcoes(departamentos) },
-              { name: "gestor_id", label: "Gestor", tipo: "select", opcoes: opcoes(pessoas) },
-              { name: "supervisor_id", label: "Supervisor", tipo: "select", opcoes: opcoes(pessoas) },
-              { name: "descricao", label: "Descrição", tipo: "textarea" },
-            ]}
+            campos={camposEquipe}
+            valoresIniciais={{ status: "ativo" }}
             onSubmit={async (v) => {
               const nome = v.req("nome");
               const { error } = await supabase.from("teams").insert({
@@ -111,7 +106,9 @@ function Equipes() {
                 department_id: v.txt("department_id"),
                 gestor_id: v.txt("gestor_id"),
                 supervisor_id: v.txt("supervisor_id"),
+                status: v.txt("status") ?? "ativo",
                 descricao: v.txt("descricao"),
+                observacoes: v.txt("observacoes"),
               });
               if (error) throw error;
               await registrarAuditoria({ operacao: "criar", tabela: "teams", descricao: `Equipe criada: ${nome}` });
