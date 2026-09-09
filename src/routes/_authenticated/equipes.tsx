@@ -6,7 +6,7 @@ import { Pill } from "@/components/StatusBadge";
 import { FormDialog } from "@/components/FormDialog";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { EquipeAcoes, useCamposEquipe, useEquipePermissoes } from "@/components/EquipeAcoes";
 import { registrarAuditoria, useTabela } from "@/lib/dados";
 import { toast } from "sonner";
 
@@ -30,6 +30,10 @@ interface EquipeRow {
   nome: string;
   descricao: string | null;
   status: string;
+  observacoes: string | null;
+  department_id: string | null;
+  gestor_id: string | null;
+  supervisor_id: string | null;
   departments: { nome: string } | null;
   gestor: { nome: string } | null;
   supervisor: { nome: string } | null;
