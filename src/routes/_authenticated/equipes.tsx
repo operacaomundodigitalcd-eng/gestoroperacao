@@ -56,10 +56,7 @@ function Equipes() {
     "nome",
   );
   const { data: subgrupos = [] } = useTabela<SubgrupoRow>("subgroups", "id, nome, descricao, status, teams(nome)", "nome");
-  const { data: departamentos = [] } = useTabela<Opcao>("departments", "id, nome", "nome");
-  const { data: pessoas = [] } = useTabela<Opcao>("employees", "id, nome", "nome");
-
-  const opcoes = (arr: Opcao[]) => arr.map((o) => ({ value: o.id, label: o.nome }));
+  const camposEquipe = useCamposEquipe();
 
   return (
     <AppShell
