@@ -120,24 +120,24 @@ function Equipes() {
         <div className="grid gap-3 md:grid-cols-2">
           {isLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
           {equipes.map((e) => (
-            <Link
-              key={e.id}
-              to="/equipe/$id"
-              params={{ id: e.id }}
-              className="block border-l-2 border-primary bg-sand/40 p-4 transition-colors hover:bg-sand"
-            >
+            <div key={e.id} className="border-l-2 border-primary bg-sand/40 p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-display text-base font-bold tracking-tight">{e.nome}</p>
+                  <Link to="/equipe/$id" params={{ id: e.id }} className="font-display text-base font-bold tracking-tight hover:underline">
+                    {e.nome}
+                  </Link>
                   <p className="font-mono text-[11px] text-muted-foreground">{e.departments?.nome ?? "sem departamento"}</p>
                 </div>
-                <Pill tone={e.status === "ativo" ? "success" : "warning"}>{e.status}</Pill>
+                <Pill tone={e.status === "ativo" ? "success" : "warning"}>{e.status === "ativo" ? "Ativa" : "Inativa"}</Pill>
               </div>
               {e.descricao && <p className="mt-2 text-sm text-muted-foreground">{e.descricao}</p>}
               <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"} · ver painel →
+                Gestor: {e.gestor?.nome ?? "—"} · Supervisor: {e.supervisor?.nome ?? "—"}
               </p>
-            </Link>
+              <div className="mt-3">
+                <EquipeAcoes equipe={e} />
+              </div>
+            </div>
           ))}
         </div>
       </Painel>
