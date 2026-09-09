@@ -20,7 +20,7 @@ interface PessoaRow {
   supervisor: { nome: string } | null;
 }
 
-const SELECT_PESSOAS = "id, nome, team_id, status, positions(nome), job_functions(nome), supervisor:employees!employees_supervisor_id_fkey(nome)";
+const SELECT_PESSOAS = "id, nome, team_id, status, positions(nome), job_functions(nome), supervisor:supervisor_id(nome)";
 
 export function usePessoasComCargo() {
   return useTabela<PessoaRow>("employees", SELECT_PESSOAS, "nome");
